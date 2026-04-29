@@ -1,0 +1,87 @@
+<view class="container">
+  <view class="search-section">
+    <view class="location-info">
+      <text class="location-icon">📍</text>
+      <text class="location-text">{{locationText}}</text>
+    </view>
+    <view class="search-box">
+      <view class="search-input-wrapper">
+        <text class="search-icon">🔍</text>
+        <input 
+          class="search-input" 
+          placeholder="搜索地点、路线或活动..." 
+          placeholder-class="search-placeholder"
+          bindconfirm="onSearchInput"
+        />
+      </view>
+    </view>
+  </view>
+
+  <view class="quick-actions-section">
+    <view class="section-header">
+      <text class="section-title">快捷功能</text>
+    </view>
+    <view class="quick-actions-grid">
+      <view 
+        wx:for="{{quickActions}}" 
+        wx:key="id" 
+        class="action-item" 
+        data-path="{{item.path}}"
+        bindtap="onTapAction"
+      >
+        <view class="action-icon">{{item.icon}}</view>
+        <text class="action-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="recent-section" wx:if="{{recentLocations.length > 0 || savedRoutes.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">最近使用</text>
+      <text class="clear-btn" bindtap="onClearHistory" wx:if="{{recentLocations.length > 0}}">清除</text>
+    </view>
+
+    <view class="recent-list" wx:if="{{recentLocations.length > 0}}">
+      <view class="recent-category">
+        <text class="category-title">📍 最近地点</text>
+      </view>
+      <view 
+        class="recent-item" 
+        wx:for="{{recentLocations}}" 
+        wx:key="id"
+        data-location="{{item}}"
+        bindtap="onTapLocation"
+      >
+        <view class="recent-item-main">
+          <text class="recent-name">{{item.name}}</text>
+          <text class="recent-address">{{item.address}}</text>
+        </view>
+        <text class="recent-distance" wx:if="{{item.distance}}">{{item.distanceText || formatDistance(item.distance)}}</text>
+      </view>
+    </view>
+
+    <view class="recent-list" wx:if="{{savedRoutes.length > 0}}">
+      <view class="recent-category">
+        <text class="category-title">🗺️ 已存路线</text>
+      </view>
+      <view 
+        class="recent-item" 
+        wx:for="{{savedRoutes}}" 
+        wx:key="id"
+        data-route="{{item}}"
+        bindtap="onTapRoute"
+      >
+        <view class="recent-item-main">
+          <text class="recent-name">{{item.name}}</text>
+          <text class="recent-address">{{item.locationCount}}个地点 · {{item.totalDistanceText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{recentLocations.length === 0 && savedRoutes.length === 0}}">
+    <text class="empty-icon">🗺️</text>
+    <text class="empty-text">开始探索吧！</text>
+    <text class="empty-subtitle">搜索地点或规划路线，开启你的旅程</text>
+  </view>
+</view>

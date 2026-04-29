@@ -1,0 +1,61 @@
+Loading project all files...
+Loading project all files success
+编译 app.json
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到
+Loading project all files...
+Loading project all files success
+Loading project all files...
+Loading project all files success
+编译 app.json
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到
+编译 app.json
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到
+编译 app.json
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到
+编译 app.json
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到

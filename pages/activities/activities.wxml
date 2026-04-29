@@ -1,0 +1,191 @@
+<view class="container">
+  <view class="tags-section">
+    <view class="tags-header">
+      <text class="section-title">活动标签</text>
+      <text class="filter-btn" bindtap="onToggleFilter">
+        <text class="filter-icon">⚙️</text>
+        <text class="filter-text">筛选</text>
+      </text>
+    </view>
+    <view class="tags-list">
+      <view 
+        class="tag-item {{selectedTags.includes(item.id) ? 'active' : ''}}" 
+        wx:for="{{allTags}}" 
+        wx:key="id"
+        data-tag="{{item}}"
+        bindtap="onTagTap"
+      >
+        <text class="tag-icon">{{item.icon}}</text>
+        <text class="tag-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="filter-panel" wx:if="{{showFilter}}">
+    <view class="filter-section">
+      <text class="filter-label">排序方式</text>
+      <view class="sort-options">
+        <view 
+          class="sort-item {{sortBy === 'recommend' ? 'active' : ''}}" 
+          data-sort="recommend" 
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">推荐优先</text>
+        </view>
+        <view 
+          class="sort-item {{sortBy === 'distance' ? 'active' : ''}}" 
+          data-sort="distance" 
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">距离最近</text>
+        </view>
+        <view 
+          class="sort-item {{sortBy === 'newest' ? 'active' : ''}}" 
+          data-sort="newest" 
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">最新发布</text>
+        </view>
+        <view 
+          class="sort-item {{sortBy === 'price_low' ? 'active' : ''}}" 
+          data-sort="price_low" 
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">价格从低到高</text>
+        </view>
+      </view>
+    </view>
+    <view class="filter-actions">
+      <view class="reset-btn" bindtap="onToggleFilter">
+        <text class="reset-text">取消</text>
+      </view>
+      <view class="confirm-btn" bindtap="onToggleFilter">
+        <text class="confirm-text">确定</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="activities-section">
+    <view class="section-header">
+      <text class="section-title">活动列表</text>
+      <text class="refresh-btn" bindtap="onRefresh">🔄 刷新</text>
+    </view>
+    
+    <view class="activities-list" wx:if="{{activities.length > 0}}">
+      <view 
+        class="activity-card" 
+        wx:for="{{activities}}" 
+        wx:key="id"
+        data-activity="{{item}}"
+        bindtap="onActivityTap"
+      >
+        <view class="activity-image" wx:if="{{item.imageUrl}}">
+          <image class="activity-img" src="{{item.imageUrl}}" mode="aspectFill" />
+        </view>
+        <view class="activity-content">
+          <view class="activity-title-row">
+            <text class="activity-title">{{item.title}}</text>
+            <view class="activity-price" wx:if="{{item.price > 0}}">
+              <text class="price-value">¥{{item.price}}</text>
+            </view>
+            <view class="activity-price free" wx:else>
+              <text class="price-value">免费</text>
+            </view>
+          </view>
+          
+          <text class="activity-desc" wx:if="{{item.description}}">{{item.description}}</text>
+          
+          <view class="activity-meta">
+            <text class="meta-item">📅 {{item.startDate}}{{item.endDate ? ' - ' + item.endDate : ''}}</text>
+            <text class="meta-item" wx:if="{{item.distanceText}}">📍 {{item.distanceText}}</text>
+          </view>
+          
+          <view class="activity-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+            <text class="tag" wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="load-more" wx:if="{{hasMore}}" bindtap="onLoadMore">
+        <text class="load-more-text">{{isLoading ? '加载中...' : '加载更多'}}</text>
+      </view>
+    </view>
+    
+    <view class="empty-activities" wx:else>
+      <text class="empty-icon">🎉</text>
+      <text class="empty-text">{{isLoading ? '加载中...' : '暂无活动'}}</text>
+      <text class="empty-subtitle" wx:if="{{!isLoading}}">选择其他标签或稍后再试</text>
+    </view>
+  </view>
+
+  <view class="detail-overlay" wx:if="{{showDetail && activityDetail}}">
+    <view class="overlay-bg" bindtap="onCloseDetail"></view>
+    <view class="detail-panel">
+      <view class="detail-header">
+        <text class="detail-title">{{activityDetail.title}}</text>
+        <text class="close-btn" bindtap="onCloseDetail">✕</text>
+      </view>
+      
+      <scroll-view scroll-y class="detail-content">
+        <view class="detail-image" wx:if="{{activityDetail.imageUrl}}">
+          <image class="detail-img" src="{{activityDetail.imageUrl}}" mode="aspectFill" />
+        </view>
+        
+        <view class="detail-info">
+          <view class="info-section">
+            <text class="info-label">活动介绍</text>
+            <text class="info-value">{{activityDetail.description || '暂无介绍'}}</text>
+          </view>
+          
+          <view class="info-section">
+            <text class="info-label">活动时间</text>
+            <text class="info-value">
+              {{activityDetail.startDate}}{{activityDetail.endDate ? ' 至 ' + activityDetail.endDate : ''}}
+            </text>
+          </view>
+          
+          <view class="info-section" wx:if="{{activityDetail.location}}">
+            <text class="info-label">活动地点</text>
+            <view class="location-info">
+              <text class="info-value">{{activityDetail.location.name}}</text>
+              <text class="info-address">{{activityDetail.location.address}}</text>
+              <text class="info-distance" wx:if="{{activityDetail.distanceText}}">
+                距离您 {{activityDetail.distanceText}}
+              </text>
+            </view>
+          </view>
+          
+          <view class="info-section">
+            <text class="info-label">活动价格</text>
+            <view class="price-info">
+              <text class="price-amount" wx:if="{{activityDetail.price > 0}}">¥{{activityDetail.price}}</text>
+              <text class="price-amount free" wx:else>免费</text>
+            </view>
+          </view>
+          
+          <view class="info-section" wx:if="{{activityDetail.tags && activityDetail.tags.length > 0}}">
+            <text class="info-label">活动标签</text>
+            <view class="detail-tags">
+              <text class="detail-tag" wx:for="{{activityDetail.tags}}" wx:key="index" wx:for-item="tag">{{tag}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      
+      <view class="detail-actions">
+        <view class="action-btn secondary" bindtap="onAddToRoute">
+          <text class="action-icon">➕</text>
+          <text class="action-text">添加到路线</text>
+        </view>
+        <view class="action-btn secondary" bindtap="onNavigateToActivity">
+          <text class="action-icon">🧭</text>
+          <text class="action-text">导航前往</text>
+        </view>
+        <view class="action-btn primary" bindtap="onShareActivity">
+          <text class="action-icon">📤</text>
+          <text class="action-text">分享</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

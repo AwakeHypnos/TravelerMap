@@ -7,6 +7,8 @@ Page({
     locations: [],
     currentLocation: null,
     selectedLocations: [],
+    activeLocationCount: 0,
+    canPlanRoute: false,
     plannedRoute: null,
     routeMode: 'shortest',
     showTimePlan: false,
@@ -42,11 +44,24 @@ Page({
     }
   },
 
+  updateActiveLocationCount() {
+    const { selectedLocations } = this.data
+    const activeCount = selectedLocations.filter(loc => loc.selected).length
+    const canPlan = activeCount >= 2
+    
+    this.setData({
+      activeLocationCount: activeCount,
+      canPlanRoute: canPlan
+    })
+  },
+
   loadSavedLocations() {
     try {
       const savedLocations = wx.getStorageSync('selectedLocations') || []
       this.setData({
         selectedLocations: savedLocations
+      }, () => {
+        this.updateActiveLocationCount()
       })
     } catch (error) {
       console.error('加载保存的地点失败:', error)
@@ -159,6 +174,8 @@ Page({
     
     this.setData({
       selectedLocations: updatedLocations
+    }, () => {
+      this.updateActiveLocationCount()
     })
     
     try {
@@ -183,6 +200,8 @@ Page({
           
           this.setData({
             selectedLocations: updatedLocations
+          }, () => {
+            this.updateActiveLocationCount()
           })
           
           try {
@@ -210,6 +229,8 @@ Page({
     
     this.setData({
       selectedLocations: updatedLocations
+    }, () => {
+      this.updateActiveLocationCount()
     })
   },
 
@@ -376,6 +397,8 @@ Page({
         if (res.confirm) {
           this.setData({
             selectedLocations: []
+          }, () => {
+            this.updateActiveLocationCount()
           })
           
           try {

@@ -25,8 +25,7 @@
   <view class="room-section" wx:if="{{roomId}}">
     <view class="room-header">
       <view class="room-info">
-        <text class="room-name" wx:if="{{roomInfo && roomInfo.name}}">{{roomInfo.name}}</text>
-        <text class="room-name" wx:else>共创房间</text>
+        <text class="room-name">{{roomInfo?.name || '共创房间'}}</text>
         <text class="room-id">房间号: {{roomId}}</text>
       </view>
       <view class="room-actions">
@@ -94,8 +93,7 @@
             <text class="marker-desc" wx:if="{{item.description}}">{{item.description}}</text>
             <text class="marker-address" wx:if="{{item.address}}">{{item.address}}</text>
             <view class="marker-meta">
-              <text class="meta-text" wx:if="{{item.createdBy && item.createdBy.name}}">由 {{item.createdBy.name}} 添加</text>
-              <text class="meta-text" wx:else>由 未知 添加</text>
+              <text class="meta-text">由 {{item.createdBy?.name || '未知'}} 添加</text>
             </view>
           </view>
           <view class="marker-actions">
@@ -221,8 +219,7 @@
         <view class="input-group">
           <text class="input-label">位置选择</text>
           <view class="location-select" bindtap="onSelectLocation">
-            <text class="location-text" wx:if="{{tempMarkerLocation && tempMarkerLocation.name}}">{{tempMarkerLocation.name}}</text>
-            <text class="location-text" wx:else>点击选择位置</text>
+            <text class="location-text">{{tempMarkerLocation?.name || '点击选择位置'}}</text>
             <text class="location-arrow">›</text>
           </view>
         </view>

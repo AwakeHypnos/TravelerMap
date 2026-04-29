@@ -1,13 +1,20 @@
+Loading project all files...
+Loading project all files success
 编译 app.json
-app.json: app.json
-Expecting 'STRING', got INVALID
-  14 |     "navigationBarTitleText": "旅游地图",
-  15 |     "navigationBarTextStyle": "white"
-> 16 |   },
-     |   ^
-  17 |   // "tabBar": {
-  18 |   //   "color": "#7f8c8d",
-  19 |   //   "selectedColor": "#3498db",
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到
+Loading project all files...
+Loading project all files success
+Loading project all files...
+Loading project all files success
 编译 app.json
 app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
 ["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
@@ -30,142 +37,25 @@ app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
 ["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
 ["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
 ["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到
-Compile app.json
-app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" not found
-["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" not found
-["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" not found
-["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" not found
-["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" not found
-["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" not found
-["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" not found
-["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" not found
-["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" not found
-["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" not found
-["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" not found
-["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" not found
-["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" not found
-["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" not found
-["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" not found
-["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" not found
-["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" not found
-["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" not found
-["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" not found
-["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" not found
-["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" not found
-["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" not found
-["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" not found
-Compile app.json
-app.json: ["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" not found
-Compile app.json
-Compile ext.json
-Compile json files of 7 pages
-analyzing codes...
-ignoring files: project.private.config.json
-analyzing codes success
-Ignored by code analyzer: project.private.config.json
-analyzing codes...
-ignoring files: project.private.config.json
-analyzing codes success
-Ignored by code analyzer: project.private.config.json
-getDevCodeByFileList-miniProgram
-Compiling app.wxss
-Compiling app.wxss
-Compiling pages/activities/activities.wxss
-Compiling pages/activities/activities.wxss
-Compiling pages/ai-assistant/ai-assistant.wxss
-Compiling pages/ai-assistant/ai-assistant.wxss
-Compiling pages/collaborative/collaborative.wxss
-Compiling pages/collaborative/collaborative.wxss
-Compiling pages/index/index.wxss
-Compiling pages/index/index.wxss
-Compiling pages/map/map.wxss
-Compiling pages/map/map.wxss
-Compiling pages/route/route.wxss
-Compiling pages/route/route.wxss
-Compiling pages/search/search.wxss
-Compiling pages/search/search.wxss
-app.wxss
-pages/activities/activities.wxss
-pages/ai-assistant/ai-assistant.wxss
-pages/collaborative/collaborative.wxss
-pages/index/index.wxss
-pages/map/map.wxss
-pages/route/route.wxss
-pages/search/search.wxss
-app.wxss
-pages/activities/activities.wxss
-pages/ai-assistant/ai-assistant.wxss
-pages/collaborative/collaborative.wxss
-pages/index/index.wxss
-pages/map/map.wxss
-pages/route/route.wxss
-pages/search/search.wxss
-getDevCodeByFileList-miniProgram
-Compiling pages/activities/activities.wxml
-Compiling pages/activities/activities.wxml
-Compiling pages/ai-assistant/ai-assistant.wxml
-Compiling pages/ai-assistant/ai-assistant.wxml
-Compiling pages/collaborative/collaborative.wxml
-Compiling pages/collaborative/collaborative.wxml
-Compiling pages/index/index.wxml
-Compiling pages/index/index.wxml
-Compiling pages/map/map.wxml
-Compiling pages/map/map.wxml
-Compiling pages/route/route.wxml
-Compiling pages/route/route.wxml
-Compiling pages/search/search.wxml
-Compiling pages/search/search.wxml
-pages/activities/activities.wxml
-pages/ai-assistant/ai-assistant.wxml
-pages/collaborative/collaborative.wxml
-pages/index/index.wxml
-pages/map/map.wxml
-pages/route/route.wxml
-pages/search/search.wxml
-pages/activities/activities.wxml
-pages/ai-assistant/ai-assistant.wxml
-pages/collaborative/collaborative.wxml
-pages/index/index.wxml
-pages/map/map.wxml
-pages/route/route.wxml
-pages/search/search.wxml
-getDevCodeByFileList-miniProgram
+编译 app.json
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到
+编译 app.json
+app.json: ["tabBar"]["list"][0]["iconPath"]: "images/icons/home.png" 未找到
+["tabBar"]["list"][0]["selectedIconPath"]: "images/icons/home-active.png" 未找到
+["tabBar"]["list"][1]["iconPath"]: "images/icons/map.png" 未找到
+["tabBar"]["list"][1]["selectedIconPath"]: "images/icons/map-active.png" 未找到
+["tabBar"]["list"][2]["iconPath"]: "images/icons/route.png" 未找到
+["tabBar"]["list"][2]["selectedIconPath"]: "images/icons/route-active.png" 未找到
+["tabBar"]["list"][3]["iconPath"]: "images/icons/activity.png" 未找到
+["tabBar"]["list"][3]["selectedIconPath"]: "images/icons/activity-active.png" 未找到
+["tabBar"]["list"][4]["iconPath"]: "images/icons/collaborate.png" 未找到
+["tabBar"]["list"][4]["selectedIconPath"]: "images/icons/collaborate-active.png" 未找到

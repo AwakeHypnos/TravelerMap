@@ -1,0 +1,347 @@
+<view class="container">
+  <view class="welcome-section" wx:if="{{!roomId}}">
+    <view class="welcome-content">
+      <text class="welcome-icon">👥</text>
+      <text class="welcome-title">地图共创</text>
+      <text class="welcome-subtitle">与好友一起规划完美旅程</text>
+      <text class="welcome-desc">支持最多4人同时编辑地点、投票选择路线、随机决策</text>
+    </view>
+    
+    <view class="welcome-actions">
+      <view class="action-card create" bindtap="onShowCreatePanel">
+        <text class="card-icon">➕</text>
+        <text class="card-title">创建房间</text>
+        <text class="card-desc">创建新的共创房间，邀请好友加入</text>
+      </view>
+      
+      <view class="action-card join" bindtap="onShowJoinPanel">
+        <text class="card-icon">🚪</text>
+        <text class="card-title">加入房间</text>
+        <text class="card-desc">输入房间号加入好友的共创房间</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="room-section" wx:if="{{roomId}}">
+    <view class="room-header">
+      <view class="room-info">
+        <text class="room-name">{{roomInfo?.name || '共创房间'}}</text>
+        <text class="room-id">房间号: {{roomId}}</text>
+      </view>
+      <view class="room-actions">
+        <view class="action-icon" bindtap="onShareRoom">
+          <text class="icon-text">📤</text>
+        </view>
+        <view class="action-icon" bindtap="onLeaveRoom">
+          <text class="icon-text">🚪</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="members-section">
+      <view class="section-header">
+        <text class="section-title">成员列表 ({{members.length}}/4)</text>
+        <text class="section-status">{{isHost ? '我是房主' : '普通成员'}}</text>
+      </view>
+      <view class="members-list">
+        <view class="member-item" wx:for="{{members}}" wx:key="id">
+          <view class="member-avatar">
+            <text class="avatar-icon">{{item.isHost ? '👑' : '👤'}}</text>
+          </view>
+          <view class="member-info">
+            <text class="member-name">{{item.name}}</text>
+            <text class="member-role">{{item.isHost ? '房主' : '成员'}}</text>
+          </view>
+          <view class="member-status online">
+            <text class="status-dot"></text>
+          </view>
+        </view>
+        
+        <view class="member-item empty-slot" wx:for="{{4 - members.length}}" wx:key="index">
+          <view class="member-avatar empty">
+            <text class="avatar-icon">➕</text>
+          </view>
+          <view class="member-info">
+            <text class="member-name">等待加入...</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="markers-section">
+      <view class="section-header">
+        <text class="section-title">添加的地点 ({{mapMarkers.length}})</text>
+        <view class="section-actions">
+          <text class="action-text" bindtap="onViewOnMap" wx:if="{{mapMarkers.length > 0}}">查看地图</text>
+          <text class="action-text" bindtap="onAddMarker">添加</text>
+        </view>
+      </view>
+      
+      <view class="markers-list" wx:if="{{mapMarkers.length > 0}}">
+        <view 
+          class="marker-item" 
+          wx:for="{{mapMarkers}}" 
+          wx:key="id"
+          data-marker="{{item}}"
+          bindlongpress="onEditMarker"
+        >
+          <view class="marker-icon">
+            <text class="icon-text">📍</text>
+          </view>
+          <view class="marker-info">
+            <text class="marker-name">{{item.name}}</text>
+            <text class="marker-desc" wx:if="{{item.description}}">{{item.description}}</text>
+            <text class="marker-address" wx:if="{{item.address}}">{{item.address}}</text>
+            <view class="marker-meta">
+              <text class="meta-text">由 {{item.createdBy?.name || '未知'}} 添加</text>
+            </view>
+          </view>
+          <view class="marker-actions">
+            <text class="edit-icon" bindtap="onEditMarker" data-marker="{{item}}">⋮</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="empty-markers" wx:else>
+        <text class="empty-icon">📍</text>
+        <text class="empty-text">还没有添加地点</text>
+        <text class="empty-subtitle">点击上方"添加"按钮开始规划</text>
+      </view>
+    </view>
+
+    <view class="decision-section">
+      <view class="section-header">
+        <text class="section-title">决策工具</text>
+      </view>
+      <view class="decision-actions">
+        <view class="decision-btn vote" bindtap="onStartVote">
+          <text class="btn-icon">🗳️</text>
+          <text class="btn-name">投票选择</text>
+          <text class="btn-desc">全员投票决定最优路线</text>
+        </view>
+        <view class="decision-btn random" bindtap="onRandomSelect">
+          <text class="btn-icon">🎲</text>
+          <text class="btn-name">随机选择</text>
+          <text class="btn-desc">让AI帮你做决定</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showCreatePanel}}">
+    <view class="modal-bg" bindtap="onCloseCreatePanel"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">创建共创房间</text>
+      </view>
+      <view class="modal-body">
+        <view class="input-group">
+          <text class="input-label">房间名称</text>
+          <input 
+            class="input-field" 
+            placeholder="请输入房间名称" 
+            value="{{newRoomName}}"
+            bindinput="onRoomNameInput"
+            focus
+          />
+        </view>
+        <view class="room-tip">
+          <text class="tip-text">💡 房间创建后，您将成为房主，可以邀请最多3位好友加入</text>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn secondary" bindtap="onCloseCreatePanel">
+          <text class="btn-text">取消</text>
+        </view>
+        <view class="modal-btn primary" bindtap="onCreateRoom">
+          <text class="btn-text">创建</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showJoinPanel}}">
+    <view class="modal-bg" bindtap="onCloseJoinPanel"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">加入共创房间</text>
+      </view>
+      <view class="modal-body">
+        <view class="input-group">
+          <text class="input-label">房间号</text>
+          <input 
+            class="input-field" 
+            placeholder="请输入房间号" 
+            value="{{joinRoomId}}"
+            bindinput="onJoinRoomIdInput"
+            maxlength="6"
+            focus
+          />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn secondary" bindtap="onCloseJoinPanel">
+          <text class="btn-text">取消</text>
+        </view>
+        <view class="modal-btn primary" bindtap="onJoinRoom">
+          <text class="btn-text">加入</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showAddMarkerPanel}}">
+    <view class="modal-bg" bindtap="onCloseAddMarkerPanel"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">添加地点</text>
+      </view>
+      <view class="modal-body">
+        <view class="input-group">
+          <text class="input-label">地点名称</text>
+          <input 
+            class="input-field" 
+            placeholder="请输入地点名称" 
+            value="{{markerName}}"
+            bindinput="onMarkerNameInput"
+            focus
+          />
+        </view>
+        <view class="input-group">
+          <text class="input-label">描述 (可选)</text>
+          <textarea 
+            class="textarea-field" 
+            placeholder="添加地点描述..." 
+            value="{{markerDescription}}"
+            bindinput="onMarkerDescInput"
+          />
+        </view>
+        <view class="input-group">
+          <text class="input-label">位置选择</text>
+          <view class="location-select" bindtap="onSelectLocation">
+            <text class="location-text">{{tempMarkerLocation?.name || '点击选择位置'}}</text>
+            <text class="location-arrow">›</text>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn secondary" bindtap="onCloseAddMarkerPanel">
+          <text class="btn-text">取消</text>
+        </view>
+        <view class="modal-btn primary" bindtap="onConfirmAddMarker">
+          <text class="btn-text">添加</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showVotePanel}}">
+    <view class="modal-bg" bindtap="onCloseVotePanel"></view>
+    <view class="modal-content large">
+      <view class="modal-header">
+        <text class="modal-title">投票选择地点</text>
+        <text class="voting-status">请投票选择您喜欢的地点</text>
+      </view>
+      <view class="modal-body scrollable">
+        <view 
+          class="vote-item {{votes[item.id] > 0 ? 'selected' : ''}}" 
+          wx:for="{{mapMarkers}}" 
+          wx:key="id"
+          data-marker-id="{{item.id}}"
+          bindtap="onVote"
+        >
+          <view class="vote-icon">
+            <text class="icon-text">📍</text>
+          </view>
+          <view class="vote-info">
+            <text class="vote-name">{{item.name}}</text>
+            <text class="vote-desc" wx:if="{{item.description}}">{{item.description}}</text>
+          </view>
+          <view class="vote-count" wx:if="{{votes[item.id] > 0}}">
+            <text class="count-text">{{votes[item.id]}}票</text>
+          </view>
+          <view class="vote-indicator" wx:else>
+            <text class="indicator-icon">○</text>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn secondary" bindtap="onCloseVotePanel">
+          <text class="btn-text">取消</text>
+        </view>
+        <view class="modal-btn primary" bindtap="onConfirmVote">
+          <text class="btn-text">确认投票</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showResultPanel}}">
+    <view class="modal-bg" bindtap="onCloseResultPanel"></view>
+    <view class="modal-content result">
+      <view class="result-header">
+        <text class="result-icon">🎉</text>
+        <text class="result-title">投票结果</text>
+      </view>
+      
+      <view class="winner-section" wx:if="{{selectedOption}}">
+        <view class="winner-card">
+          <text class="winner-label">最高票选</text>
+          <text class="winner-name">{{selectedOption.name}}</text>
+          <text class="winner-votes">{{selectedOption.votes}}票</text>
+        </view>
+      </view>
+      
+      <view class="results-list">
+        <view class="result-item" wx:for="{{voteResults}}" wx:key="id">
+          <view class="result-rank">
+            <text class="rank-number">{{index + 1}}</text>
+          </view>
+          <view class="result-info">
+            <text class="result-name">{{item.name}}</text>
+            <text class="result-votes">{{item.votes}}票</text>
+          </view>
+          <view class="result-bar">
+            <view class="bar-fill" style="width: {{item.votes > 0 ? (item.votes / voteResults[0].votes * 100) : 0}}%;"></view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <view class="modal-btn secondary" bindtap="onCloseResultPanel">
+          <text class="btn-text">关闭</text>
+        </view>
+        <view class="modal-btn primary" bindtap="onUseSelected">
+          <text class="btn-text">使用此地点</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showRandomPanel}}">
+    <view class="modal-bg" bindtap="onCloseRandomPanel"></view>
+    <view class="modal-content result">
+      <view class="result-header">
+        <text class="result-icon">🎲</text>
+        <text class="result-title">随机选择结果</text>
+      </view>
+      
+      <view class="random-section" wx:if="{{randomResult}}">
+        <view class="random-card">
+          <text class="random-label">AI为你选择了</text>
+          <text class="random-name">{{randomResult.name}}</text>
+          <text class="random-desc" wx:if="{{randomResult.description}}">{{randomResult.description}}</text>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <view class="modal-btn secondary" bindtap="onRandomSelect">
+          <text class="btn-text">再试一次</text>
+        </view>
+        <view class="modal-btn primary" bindtap="onUseSelected">
+          <text class="btn-text">就它了</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

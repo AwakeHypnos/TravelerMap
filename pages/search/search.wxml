@@ -1,0 +1,184 @@
+<view class="container">
+  <view class="search-header">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索地点、关键词..."
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+        focus="{{!showResults}}"
+      />
+      <text class="clear-icon" wx:if="{{searchKeyword}}" bindtap="onClearSearch">✕</text>
+    </view>
+    <text class="search-btn" bindtap="onSearchConfirm">搜索</text>
+  </view>
+
+  <view class="search-type-tabs" wx:if="{{!showResults}}">
+    <view 
+      class="tab-item {{searchType === 'place' ? 'active' : ''}}" 
+      data-type="place" 
+      bindtap="onSearchTypeChange"
+    >
+      <text class="tab-name">地点搜索</text>
+    </view>
+    <view 
+      class="tab-item {{searchType === 'concentration' ? 'active' : ''}}" 
+      data-type="concentration" 
+      bindtap="onSearchTypeChange"
+    >
+      <text class="tab-name">密度搜索</text>
+    </view>
+  </view>
+
+  <view class="search-content" wx:if="{{!showResults}}">
+    <view class="category-section" wx:if="{{searchType === 'concentration'}}">
+      <view class="section-header">
+        <text class="section-title">高级搜索类型</text>
+      </view>
+      <view class="category-list">
+        <view 
+          class="category-item {{selectedCategory === 'concentration' ? 'active' : ''}}" 
+          data-id="concentration" 
+          bindtap="onTapCategorySearch"
+        >
+          <text class="category-icon">📍</text>
+          <view class="category-info">
+            <text class="category-name">密度搜索</text>
+            <text class="category-desc">搜索某类地点最集中的区域</text>
+          </view>
+          <text class="category-arrow">›</text>
+        </view>
+        <view 
+          class="category-item {{selectedCategory === 'route' ? 'active' : ''}}" 
+          data-id="route" 
+          bindtap="onTapCategorySearch"
+        >
+          <text class="category-icon">🛣️</text>
+          <view class="category-info">
+            <text class="category-name">路线搜索</text>
+            <text class="category-desc">搜索经过某类地点最多的路线</text>
+          </view>
+          <text class="category-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="hot-section">
+      <view class="section-header">
+        <text class="section-title">热门搜索</text>
+      </view>
+      <view class="hot-tags">
+        <view 
+          class="hot-tag" 
+          wx:for="{{hotSearches}}" 
+          wx:key="id"
+          data-name="{{item.name}}"
+          bindtap="onTapHotSearch"
+        >
+          <text class="tag-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="history-section" wx:if="{{searchHistory.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">搜索历史</text>
+        <text class="clear-history" bindtap="onClearHistory">清除</text>
+      </view>
+      <view class="history-list">
+        <view 
+          class="history-item" 
+          wx:for="{{searchHistory}}" 
+          wx:key="index"
+          data-keyword="{{item}}"
+          bindtap="onTapHistory"
+        >
+          <text class="history-icon">🕒</text>
+          <text class="history-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="results-section" wx:if="{{showResults}}">
+    <view class="results-header">
+      <text class="results-title">搜索结果</text>
+      <text class="results-count">
+        {{searchType === 'concentration' ? concentrationResults.length : searchResults.length}} 个结果
+      </text>
+    </view>
+
+    <view class="result-list" wx:if="{{searchType !== 'concentration' && searchResults.length > 0}}">
+      <view 
+        class="result-item" 
+        wx:for="{{searchResults}}" 
+        wx:key="id"
+        data-result="{{item}}"
+        bindtap="onTapResult"
+      >
+        <view class="result-icon-wrapper">
+          <text class="result-icon">📍</text>
+        </view>
+        <view class="result-info">
+          <text class="result-name">{{item.name}}</text>
+          <text class="result-address">{{item.address}}</text>
+          <view class="result-meta" wx:if="{{item.category}}">
+            <text class="meta-tag">{{item.category}}</text>
+          </view>
+        </view>
+        <view class="result-distance" wx:if="{{item.distanceText}}">
+          <text class="distance-text">{{item.distanceText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="concentration-results" wx:if="{{searchType === 'concentration' && concentrationResults.length > 0}}">
+      <view class="concentration-tip">
+        <text class="tip-icon">💡</text>
+        <text class="tip-text">以下是"{{searchKeyword}}"最集中的区域</text>
+      </view>
+      
+      <view 
+        class="area-item" 
+        wx:for="{{concentrationResults}}" 
+        wx:key="id"
+        data-area="{{item}}"
+        bindtap="onTapArea"
+      >
+        <view class="area-rank">
+          <text class="rank-number">{{index + 1}}</text>
+        </view>
+        <view class="area-info">
+          <text class="area-name">{{item.name}}</text>
+          <view class="area-stats">
+            <view class="stat-badge">
+              <text class="badge-count">{{item.count}}</text>
+              <text class="badge-label">个{{item.keyword}}</text>
+            </view>
+            <view class="stat-badge" wx:if="{{item.distanceText}}">
+              <text class="badge-count">{{item.distanceText}}</text>
+              <text class="badge-label">距离</text>
+            </view>
+          </view>
+          <text class="area-density" wx:if="{{item.density}}">密度: {{item.density}}</text>
+        </view>
+        <text class="area-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="empty-results" wx:if="{{(searchType !== 'concentration' && searchResults.length === 0) || (searchType === 'concentration' && concentrationResults.length === 0)}}">
+      <text class="empty-icon">🔍</text>
+      <text class="empty-text">未找到相关结果</text>
+      <text class="empty-subtitle">请尝试其他关键词</text>
+    </view>
+  </view>
+
+  <view class="loading-overlay" wx:if="{{isSearching}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">搜索中...</text>
+    </view>
+  </view>
+</view>

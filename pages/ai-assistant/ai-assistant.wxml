@@ -1,0 +1,147 @@
+<view class="container">
+  <scroll-view scroll-y class="messages-container">
+    <view class="messages-list">
+      <view 
+        class="message-item {{item.type}}" 
+        wx:for="{{messages}}" 
+        wx:key="id"
+      >
+        <view class="message-avatar">
+          <text class="avatar-text">{{item.type === 'ai' ? '🤖' : '👤'}}</text>
+        </view>
+        
+        <view class="message-content-wrapper">
+          <view class="message-header" wx:if="{{item.type === 'ai'}}">
+            <text class="message-sender">AI助手</text>
+          </view>
+          
+          <view class="message-bubble">
+            <text class="message-text">{{item.content}}</text>
+            
+            <text class="message-subtext" wx:if="{{item.subContent}}">{{item.subContent}}</text>
+            
+            <view class="poi-list" wx:if="{{item.pois && item.pois.length > 0}}">
+              <view 
+                class="poi-item" 
+                wx:for="{{item.pois}}" 
+                wx:key="id"
+                data-poi="{{item}}"
+                bindtap="onPOITap"
+              >
+                <view class="poi-icon">📍</view>
+                <view class="poi-info">
+                  <text class="poi-name">{{item.name}}</text>
+                  <text class="poi-address" wx:if="{{item.address}}">{{item.address}}</text>
+                </view>
+                <view class="poi-distance" wx:if="{{item.distanceText}}">
+                  <text class="distance-text">{{item.distanceText}}</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="activity-list" wx:if="{{item.activities && item.activities.length > 0}}">
+              <view 
+                class="activity-item" 
+                wx:for="{{item.activities}}" 
+                wx:key="id"
+                data-activity="{{item}}"
+                bindtap="onActivityTap"
+              >
+                <view class="activity-header">
+                  <text class="activity-title">{{item.title}}</text>
+                  <view class="activity-tags">
+                    <text class="tag-item" wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag}}</text>
+                  </view>
+                </view>
+                <view class="activity-meta">
+                  <text class="meta-item">📅 {{item.startDate}}</text>
+                  <text class="meta-item" wx:if="{{item.price > 0}}">💰 ¥{{item.price}}</text>
+                  <text class="meta-item" wx:else>💰 免费</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="route-list" wx:if="{{item.routes && item.routes.length > 0}}">
+              <view 
+                class="route-card" 
+                wx:for="{{item.routes}}" 
+                wx:key="index"
+                data-route="{{item}}"
+                data-index="{{index}}"
+                bindtap="onRouteTap"
+              >
+                <view class="route-header">
+                  <text class="route-name">{{item.name}}</text>
+                  <text class="route-arrow">›</text>
+                </view>
+                <text class="route-desc">{{item.description}}</text>
+                <view class="route-locations">
+                  <view class="location-dot" wx:for="{{item.locations}}" wx:key="index">
+                    <text class="dot-number">{{index + 1}}</text>
+                    <text class="dot-name">{{item.name}}</text>
+                    <text class="dot-distance">{{item.distance}}</text>
+                  </view>
+                </view>
+                <view class="route-footer">
+                  <text class="footer-item">⏱️ {{item.totalTime}}</text>
+                  <text class="footer-item">📍 {{item.totalDistance}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="loading-message" wx:if="{{isLoading}}">
+        <view class="message-avatar">
+          <text class="avatar-text">🤖</text>
+        </view>
+        <view class="message-content-wrapper">
+          <view class="message-bubble">
+            <view class="typing-indicator">
+              <view class="typing-dot"></view>
+              <view class="typing-dot"></view>
+              <view class="typing-dot"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="quick-actions-panel" wx:if="{{showQuickActions && messages.length <= 1}}">
+    <view class="panel-header">
+      <text class="panel-title">快捷选项</text>
+    </view>
+    <view class="quick-actions-grid">
+      <view 
+        class="action-item" 
+        wx:for="{{quickActions}}" 
+        wx:key="id"
+        data-action="{{item}}"
+        bindtap="onQuickActionTap"
+      >
+        <text class="action-text">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="input-section">
+    <view class="input-wrapper">
+      <input
+        class="message-input"
+        placeholder="输入你的需求..."
+        value="{{inputText}}"
+        bindinput="onInputChange"
+        bindconfirm="onSendMessage"
+        confirm-type="send"
+      />
+    </view>
+    <view 
+      class="send-btn {{inputText ? 'active' : ''}}" 
+      bindtap="onSendMessage"
+    >
+      <text class="send-icon">发送</text>
+    </view>
+  </view>
+</view>

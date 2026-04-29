@@ -1,0 +1,197 @@
+<view class="map-container">
+  <map
+    id="map"
+    class="map"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="{{scale}}"
+    markers="{{markers}}"
+    polyline="{{polyline}}"
+    circles="{{circles}}"
+    show-location
+    bindtap="onMapTap"
+    bindmarkertap="onMarkerTap"
+  ></map>
+
+  <view class="search-bar-overlay" wx:if="{{showSearchBar}}">
+    <view class="search-overlay-bg" bindtap="onSearchCancel"></view>
+    <view class="search-bar-popup">
+      <view class="search-bar-header">
+        <view class="search-input-box">
+          <text class="search-icon">🔍</text>
+          <input
+            class="search-input"
+            placeholder="搜索地点、商圈、道路..."
+            value="{{searchKeyword}}"
+            bindinput="onSearchInput"
+            bindconfirm="onSearchConfirm"
+            focus
+          />
+        </view>
+        <text class="cancel-btn" bindtap="onSearchCancel">取消</text>
+      </view>
+      
+      <view class="search-results" wx:if="{{searchResults.length > 0}}">
+        <view class="result-item" wx:for="{{searchResults}}" wx:key="id" data-poi="{{item}}" bindtap="onPOITap">
+          <view class="result-icon">📍</view>
+          <view class="result-info">
+            <text class="result-name">{{item.name}}</text>
+            <text class="result-address">{{item.address}}</text>
+          </view>
+          <text class="result-distance">{{item.distanceText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="map-controls">
+    <view class="control-btn" bindtap="onSearchTap">
+      <text class="control-icon">🔍</text>
+    </view>
+    <view class="control-btn" bindtap="onChooseLocation">
+      <text class="control-icon">📍</text>
+    </view>
+    <view class="control-btn" bindtap="onLocateTap">
+      <text class="control-icon">🧭</text>
+    </view>
+  </view>
+
+  <view class="nearby-categories">
+    <scroll-view scroll-x class="category-scroll">
+      <view class="category-list">
+        <view class="category-item" data-category="subway" bindtap="onShowNearby">
+          <text class="category-icon">🚇</text>
+          <text class="category-name">地铁站</text>
+        </view>
+        <view class="category-item" data-category="mall" bindtap="onShowNearby">
+          <text class="category-icon">🛍️</text>
+          <text class="category-name">商场</text>
+        </view>
+        <view class="category-item" data-category="restaurant" bindtap="onShowNearby">
+          <text class="category-icon">🍽️</text>
+          <text class="category-name">餐厅</text>
+        </view>
+        <view class="category-item" data-category="park" bindtap="onShowNearby">
+          <text class="category-icon">🌳</text>
+          <text class="category-name">公园</text>
+        </view>
+        <view class="category-item" data-category="hotel" bindtap="onShowNearby">
+          <text class="category-icon">🏨</text>
+          <text class="category-name">酒店</text>
+        </view>
+        <view class="category-item" data-category="convenience" bindtap="onShowNearby">
+          <text class="category-icon">🏪</text>
+          <text class="category-name">便利店</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="poi-list-panel" wx:if="{{showPOIList}}">
+    <view class="panel-header">
+      <text class="panel-title">附近地点</text>
+      <text class="close-btn" bindtap="onClosePOIList">✕</text>
+    </view>
+    <scroll-view scroll-y class="poi-list">
+      <view class="poi-item" wx:for="{{nearbyPOIs}}" wx:key="id" data-poi="{{item}}" bindtap="onPOITap">
+        <view class="poi-icon">📍</view>
+        <view class="poi-info">
+          <text class="poi-name">{{item.name}}</text>
+          <text class="poi-address">{{item.address}}</text>
+        </view>
+        <view class="poi-distance">
+          <text class="distance-text">{{item.distanceText}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="location-info-panel" wx:if="{{showLocationInfo && !showNavigationPanel}}">
+    <view class="panel-header">
+      <text class="panel-title">{{selectedLocation.name || '位置详情'}}</text>
+      <text class="close-btn" bindtap="onCloseLocationInfo">✕</text>
+    </view>
+    <view class="location-info-content">
+      <view class="info-row" wx:if="{{selectedLocation.address}}">
+        <text class="info-label">地址</text>
+        <text class="info-value">{{selectedLocation.address}}</text>
+      </view>
+      <view class="info-row" wx:if="{{selectedLocation.distance}}">
+        <text class="info-label">距离</text>
+        <text class="info-value">{{selectedLocation.distanceText}}</text>
+      </view>
+    </view>
+    <view class="panel-actions">
+      <view class="action-btn secondary" bindtap="onAddToRoute">
+        <text class="action-icon">➕</text>
+        <text class="action-text">添加到路线</text>
+      </view>
+      <view class="action-btn primary" bindtap="onNavigate">
+        <text class="action-icon">🚗</text>
+        <text class="action-text">导航</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="navigation-panel" wx:if="{{showNavigationPanel}}">
+    <view class="panel-header">
+      <text class="panel-title">路线规划</text>
+      <text class="close-btn" bindtap="onCloseNavigation">✕</text>
+    </view>
+    
+    <view class="mode-tabs">
+      <view 
+        class="tab-item {{navigationMode === 'driving' ? 'active' : ''}}" 
+        data-mode="driving" 
+        bindtap="onModeChange"
+      >
+        <text class="tab-icon">🚗</text>
+        <text class="tab-name">驾车</text>
+      </view>
+      <view 
+        class="tab-item {{navigationMode === 'transit' ? 'active' : ''}}" 
+        data-mode="transit" 
+        bindtap="onModeChange"
+      >
+        <text class="tab-icon">🚇</text>
+        <text class="tab-name">公交</text>
+      </view>
+      <view 
+        class="tab-item {{navigationMode === 'walking' ? 'active' : ''}}" 
+        data-mode="walking" 
+        bindtap="onModeChange"
+      >
+        <text class="tab-icon">🚶</text>
+        <text class="tab-name">步行</text>
+      </view>
+    </view>
+    
+    <view class="route-info" wx:if="{{routeInfo}}">
+      <view class="route-stats">
+        <view class="stat-item">
+          <text class="stat-value">{{routeInfo.distance}}公里</text>
+          <text class="stat-label">距离</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-value">{{routeInfo.duration}}分钟</text>
+          <text class="stat-label">预计时间</text>
+        </view>
+      </view>
+      
+      <view class="route-steps" wx:if="{{routeInfo.steps}}">
+        <view class="step-item" wx:for="{{routeInfo.steps}}" wx:key="index">
+          <view class="step-dot"></view>
+          <view class="step-content">
+            <text class="step-instruction">{{item.instruction}}</text>
+            <text class="step-meta" wx:if="{{item.distance > 0}}">{{item.distance}}公里 · {{item.duration}}分钟</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="start-nav-btn" bindtap="onStartNavigation">
+      <text class="start-nav-text">开始导航</text>
+    </view>
+  </view>
+</view>

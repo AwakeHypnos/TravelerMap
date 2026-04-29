@@ -1,0 +1,67 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/map/map",
+    "pages/route/route",
+    "pages/search/search",
+    "pages/ai-assistant/ai-assistant",
+    "pages/collaborative/collaborative",
+    "pages/activities/activities"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#2c3e50",
+    "navigationBarTitleText": "旅游地图",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#7f8c8d",
+    "selectedColor": "#3498db",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/icons/home.png",
+        "selectedIconPath": "images/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "text": "地图",
+        "iconPath": "images/icons/map.png",
+        "selectedIconPath": "images/icons/map-active.png"
+      },
+      {
+        "pagePath": "pages/route/route",
+        "text": "路线",
+        "iconPath": "images/icons/route.png",
+        "selectedIconPath": "images/icons/route-active.png"
+      },
+      {
+        "pagePath": "pages/activities/activities",
+        "text": "活动",
+        "iconPath": "images/icons/activity.png",
+        "selectedIconPath": "images/icons/activity-active.png"
+      },
+      {
+        "pagePath": "pages/collaborative/collaborative",
+        "text": "共创",
+        "iconPath": "images/icons/collaborate.png",
+        "selectedIconPath": "images/icons/collaborate-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于地图定位和路线规划"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation",
+    "chooseAddress"
+  ],
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -8,14 +8,14 @@ Page({
     activities: [],
     selectedTags: [],
     allTags: [
-      { id: 'culture', name: '文化', icon: '🏛️' },
-      { id: 'art', name: '艺术', icon: '🎨' },
-      { id: 'entertainment', name: '人文娱乐', icon: '🎭' },
-      { id: 'nature', name: '自然景观', icon: '🌳' },
-      { id: 'popular', name: '旅游热门', icon: '🔥' },
-      { id: 'food', name: '美食', icon: '🍽️' },
-      { id: 'shopping', name: '购物', icon: '🛍️' },
-      { id: 'history', name: '历史', icon: '📜' }
+      { id: 'culture', name: '文化', icon: '🏛️', selected: false },
+      { id: 'art', name: '艺术', icon: '🎨', selected: false },
+      { id: 'entertainment', name: '人文娱乐', icon: '🎭', selected: false },
+      { id: 'nature', name: '自然景观', icon: '🌳', selected: false },
+      { id: 'popular', name: '旅游热门', icon: '🔥', selected: false },
+      { id: 'food', name: '美食', icon: '🍽️', selected: false },
+      { id: 'shopping', name: '购物', icon: '🛍️', selected: false },
+      { id: 'history', name: '历史', icon: '📜', selected: false }
     ],
     isLoading: false,
     currentPage: 1,
@@ -136,7 +136,7 @@ Page({
     const { tag } = e.currentTarget.dataset
     if (!tag) return
     
-    const { selectedTags } = this.data
+    const { selectedTags, allTags } = this.data
     const isSelected = selectedTags.includes(tag.id)
     
     let newSelectedTags
@@ -146,8 +146,16 @@ Page({
       newSelectedTags = [...selectedTags, tag.id]
     }
     
+    const updatedTags = allTags.map(t => {
+      if (t.id === tag.id) {
+        return { ...t, selected: !isSelected }
+      }
+      return t
+    })
+    
     this.setData({
       selectedTags: newSelectedTags,
+      allTags: updatedTags,
       currentPage: 1,
       activities: []
     })

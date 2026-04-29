@@ -63,7 +63,7 @@
     <view class="section-header">
       <text class="section-title">选择地点 ({{activeLocationCount}})</text>
       <view class="header-actions">
-        <text class="action-text" bindtap="onClearAll" wx:if="{{selectedLocations.length > 0}}">清除全部
+        <text class="action-text" bindtap="onClearAll" wx:if="{{selectedLocations.length > 0}}">清除全部</text>
       </view>
     </view>
     

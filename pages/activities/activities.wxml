@@ -9,7 +9,7 @@
     </view>
     <view class="tags-list">
       <view 
-        class="tag-item {{selectedTags.includes(item.id) ? 'active' : ''}}" 
+        class="tag-item {{item.selected ? 'active' : ''}}" 
         wx:for="{{allTags}}" 
         wx:key="id"
         data-tag="{{item}}"

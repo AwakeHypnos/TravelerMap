@@ -20,6 +20,66 @@
             
             <text class="message-subtext" wx:if="{{item.subContent}}">{{item.subContent}}</text>
             
+            <view class="suggestion-list" wx:if="{{item.suggestions && item.suggestions.length > 0}}">
+              <view class="suggestion-item" wx:for="{{item.suggestions}}" wx:key="index">
+                <text class="suggestion-icon">💡</text>
+                <text class="suggestion-text">{{item}}</text>
+              </view>
+            </view>
+            
+            <view class="weather-card" wx:if="{{item.weather}}">
+              <view class="weather-header">
+                <text class="weather-temp">{{item.weather.temp}}</text>
+                <text class="weather-condition">{{item.weather.condition}}</text>
+              </view>
+              <view class="weather-details">
+                <text class="weather-detail">💧 湿度 {{item.weather.humidity}}</text>
+                <text class="weather-detail">🌬️ {{item.weather.wind}}</text>
+              </view>
+              <view class="weather-suggestion">
+                <text class="suggestion-text">{{item.weather.suggestion}}</text>
+              </view>
+            </view>
+            
+            <view class="attraction-list" wx:if="{{item.attractions && item.attractions.length > 0}}">
+              <view class="section-title-wrapper">
+                <text class="section-title-text">🏛️ 推荐景点</text>
+              </view>
+              <view 
+                class="attraction-item" 
+                wx:for="{{item.attractions}}" 
+                wx:key="name"
+              >
+                <view class="attraction-info">
+                  <text class="attraction-name">{{item.name}}</text>
+                  <text class="attraction-reason">{{item.reason}}</text>
+                  <view class="attraction-meta">
+                    <text class="meta-tag">⏱️ {{item.duration}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+            <view class="restaurant-list" wx:if="{{item.restaurants && item.restaurants.length > 0}}">
+              <view class="section-title-wrapper">
+                <text class="section-title-text">🍽️ 美食推荐</text>
+              </view>
+              <view 
+                class="restaurant-item" 
+                wx:for="{{item.restaurants}}" 
+                wx:key="name"
+              >
+                <view class="restaurant-info">
+                  <text class="restaurant-name">{{item.name}}</text>
+                  <view class="restaurant-tags">
+                    <text class="tag-item">{{item.type}}</text>
+                    <text class="tag-item rating">⭐ {{item.rating}}</text>
+                  </view>
+                  <text class="restaurant-price">{{item.price}}</text>
+                </view>
+              </view>
+            </view>
+            
             <view class="poi-list" wx:if="{{item.pois && item.pois.length > 0}}">
               <view 
                 class="poi-item" 
@@ -61,6 +121,166 @@
               </view>
             </view>
             
+            <view class="social-list" wx:if="{{item.socialActivities && item.socialActivities.length > 0}}">
+              <view 
+                class="social-item" 
+                wx:for="{{item.socialActivities}}" 
+                wx:key="id"
+                data-activity="{{item}}"
+                bindtap="onSocialActivityTap"
+              >
+                <view class="social-platform">
+                  <text class="platform-icon">{{item.platformIcon}}</text>
+                  <text class="platform-name">{{item.platformName}}</text>
+                </view>
+                <text class="social-title">{{item.title}}</text>
+                <text class="social-content">{{item.content}}</text>
+                <view class="social-tags">
+                  <text class="tag-item" wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag}}</text>
+                </view>
+                <view class="social-stats">
+                  <text class="stat-item">❤️ {{item.likesFormatted}}</text>
+                  <text class="stat-item">💬 {{item.commentsFormatted}}</text>
+                  <text class="stat-item">{{item.publishTimeFormatted}}</text>
+                  <text class="stat-item" wx:if="{{item.distance}}">📍 {{item.distance}}km</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="xiaohongshu-list" wx:if="{{item.xiaohongshuPosts && item.xiaohongshuPosts.length > 0}}">
+              <view class="section-title-wrapper">
+                <text class="section-title-text">📕 小红书热门</text>
+              </view>
+              <view 
+                class="xiaohongshu-item" 
+                wx:for="{{item.xiaohongshuPosts}}" 
+                wx:key="id"
+                data-activity="{{item}}"
+                bindtap="onSocialActivityTap"
+              >
+                <text class="xhs-title">{{item.title}}</text>
+                <text class="xhs-content">{{item.content}}</text>
+                <view class="xhs-tags">
+                  <text class="xhs-tag" wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">#{{tag}}</text>
+                </view>
+                <view class="xhs-stats">
+                  <text class="xhs-stat">❤️ {{item.likesFormatted}}</text>
+                  <text class="xhs-stat">💬 {{item.commentsFormatted}}</text>
+                  <text class="xhs-stat">⭐ {{item.collectsFormatted}}</text>
+                  <text class="xhs-stat">{{item.publishTimeFormatted}}</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="douyin-list" wx:if="{{item.douyinVideos && item.douyinVideos.length > 0}}">
+              <view class="section-title-wrapper">
+                <text class="section-title-text">🎵 抖音热门</text>
+              </view>
+              <view 
+                class="douyin-item" 
+                wx:for="{{item.douyinVideos}}" 
+                wx:key="id"
+                data-activity="{{item}}"
+                bindtap="onSocialActivityTap"
+              >
+                <view class="dy-header">
+                  <text class="dy-title">{{item.title}}</text>
+                  <text class="dy-duration">{{item.durationFormatted}}</text>
+                </view>
+                <text class="dy-music">🎵 {{item.music}}</text>
+                <view class="dy-stats">
+                  <text class="dy-stat">❤️ {{item.likesFormatted}}</text>
+                  <text class="dy-stat">💬 {{item.commentsFormatted}}</text>
+                  <text class="dy-stat">🔄 {{item.sharesFormatted}}</text>
+                  <text class="dy-stat">{{item.publishTimeFormatted}}</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="trending-list" wx:if="{{item.trendingTopics && item.trendingTopics.length > 0}}">
+              <view 
+                class="trending-item" 
+                wx:for="{{item.trendingTopics}}" 
+                wx:key="rank"
+                data-topic="{{item}}"
+                bindtap="onTopicTap"
+              >
+                <view class="trending-rank">
+                  <text class="rank-number {{index < 3 ? 'top' : ''}}">{{item.rank}}</text>
+                </view>
+                <view class="trending-info">
+                  <text class="trending-title">{{item.title}}</text>
+                  <view class="trending-meta">
+                    <text class="trending-heat">🔥 {{item.heatFormatted}}热度</text>
+                    <text class="tag-item">{{item.category}}</text>
+                  </view>
+                </view>
+                <view class="trending-trend">
+                  <text class="trend-icon" style="color: {{item.trendColor}}">{{item.trendIcon}}</text>
+                </view>
+              </view>
+            </view>
+            
+            <view class="suggestion-categories" wx:if="{{item.travelSuggestions && item.travelSuggestions.length > 0}}">
+              <view class="category-section" wx:for="{{item.travelSuggestions}}" wx:key="type">
+                <view class="category-header">
+                  <text class="category-icon">{{item.type === 'attractions' ? '🏛️' : item.type === 'food' ? '🍽️' : item.type === 'shopping' ? '🛍️' : '🎮'}}</text>
+                  <text class="category-title">{{item.title}}</text>
+                </view>
+                <view class="category-items">
+                  <view 
+                    class="category-item" 
+                    wx:for="{{item.items}}" 
+                    wx:key="name"
+                    data-recommendation="{{item}}"
+                    bindtap="onRecommendationTap"
+                  >
+                    <view class="item-info">
+                      <text class="item-name">{{item.name}}</text>
+                      <text class="item-reason">{{item.reason}}</text>
+                      <view class="item-meta">
+                        <text class="meta-item" wx:if="{{item.duration}}">⏱️ {{item.duration}}</text>
+                        <text class="meta-item" wx:if="{{item.distance}}">📍 {{item.distance}}</text>
+                        <text class="meta-item" wx:if="{{item.type}}">🏷️ {{item.type}}</text>
+                        <text class="meta-item" wx:if="{{item.rating}}">⭐ {{item.rating}}</text>
+                        <text class="meta-item" wx:if="{{item.price}}">💰 {{item.price}}</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+            <view class="recommendation-list" wx:if="{{item.activityRecommendations && item.activityRecommendations.length > 0}}">
+              <view class="section-title-wrapper">
+                <text class="section-title-text">💡 为您推荐</text>
+              </view>
+              <view 
+                class="recommendation-card" 
+                wx:for="{{item.activityRecommendations}}" 
+                wx:key="id"
+                data-recommendation="{{item}}"
+                bindtap="onRecommendationTap"
+              >
+                <view class="rec-header">
+                  <text class="rec-type">{{item.type === 'attraction' ? '🏛️ 景点' : item.type === 'food' ? '🍽️ 美食' : item.type === 'activity' ? '🎪 活动' : '🎮 娱乐'}}</text>
+                  <text class="rec-match">匹配度 {{item.matchingTags}}%</text>
+                </view>
+                <text class="rec-title">{{item.title}}</text>
+                <text class="rec-description">{{item.description}}</text>
+                <view class="rec-meta">
+                  <text class="meta-item">⏱️ {{item.estimatedTime}}分钟</text>
+                  <text class="meta-item">💰 ¥{{item.price}}</text>
+                  <text class="meta-item">📍 {{item.distance}}</text>
+                  <text class="meta-item hot">🔥 {{item.popularity}}%热门</text>
+                </view>
+                <view class="rec-tips" wx:if="{{item.tips && item.tips.length > 0}}">
+                  <text class="tips-title">💡 小贴士：</text>
+                  <text class="tip-item" wx:for="{{item.tips}}" wx:key="index">• {{item}}</text>
+                </view>
+              </view>
+            </view>
+            
             <view class="route-list" wx:if="{{item.routes && item.routes.length > 0}}">
               <view 
                 class="route-card" 
@@ -77,9 +297,14 @@
                 <text class="route-desc">{{item.description}}</text>
                 <view class="route-locations">
                   <view class="location-dot" wx:for="{{item.locations}}" wx:key="index">
-                    <text class="dot-number">{{index + 1}}</text>
-                    <text class="dot-name">{{item.name}}</text>
-                    <text class="dot-distance">{{item.distance}}</text>
+                    <view class="dot-wrapper">
+                      <view class="dot-number">{{index + 1}}</view>
+                      <view class="dot-line" wx:if="{{index < item.locations.length - 1}}"></view>
+                    </view>
+                    <view class="dot-info">
+                      <text class="dot-name">{{item.name}}</text>
+                      <text class="dot-distance" wx:if="{{item.distance}}">{{item.distance}}</text>
+                    </view>
                   </view>
                 </view>
                 <view class="route-footer">

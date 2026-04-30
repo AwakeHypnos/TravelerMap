@@ -1,6 +1,7 @@
 const app = getApp()
 import { getCurrentLocation, chooseLocation, calculateDistance, formatDistance, formatDuration } from '../../utils/location.js'
 import { generateShortestPath, generateOptimalTour, calculateTotalDistance, estimateTime, planRouteWithTimeConstraints, validateLocations } from '../../utils/routePlanner.js'
+import { searchPlaces } from '../../utils/api.js'
 
 Page({
   data: {
@@ -113,21 +114,19 @@ Page({
     
     app.showLoading('搜索中...')
     
-    import('../../utils/api.js').then(api => {
-      api.searchPlaces(searchKeyword, currentLocation, 5000)
-        .then(results => {
-          this.setData({
-            searchResults: results,
-            showSearch: true
-          })
-          app.hideLoading()
+    searchPlaces(searchKeyword, currentLocation, 5000)
+      .then(results => {
+        this.setData({
+          searchResults: results,
+          showSearch: true
         })
-        .catch(err => {
-          console.error('搜索失败:', err)
-          app.hideLoading()
-          app.showToast('搜索失败')
-        })
-    })
+        app.hideLoading()
+      })
+      .catch(err => {
+        console.error('搜索失败:', err)
+        app.hideLoading()
+        app.showToast('搜索失败')
+      })
   },
 
   onSelectSearchResult(e) {

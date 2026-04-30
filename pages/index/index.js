@@ -10,6 +10,7 @@ Page({
     savedRoutes: [],
     quickActions: [
       { id: 'search', name: '搜索地点', icon: '🔍', path: '/pages/search/search' },
+      { id: 'ai-assistant', name: 'AI 助手', icon: '🤖', path: '/pages/ai-assistant/ai-assistant' },
       { id: 'route', name: '规划路线', icon: '🗺️', path: '/pages/route/route' },
       { id: 'activities', name: '热门活动', icon: '🎉', path: '/pages/activities/activities' },
       { id: 'collaborate', name: '地图共创', icon: '👥', path: '/pages/collaborative/collaborative' }
